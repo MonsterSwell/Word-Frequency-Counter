@@ -12,9 +12,16 @@
 	<script type="text/javascript" charset="utf-8" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
 
     <script type="text/javascript" charset="utf-8">
-        var stopWords = [
-            'het', 'en', 'dan', 'dat', 'van', 'niet', 'met' // Dutch
-        ];
+        function isStopWord(word) {
+            var stopWords = [
+                'het', 'en', 'dan', 'dat', 'van', 'niet', 'met', 'door', 'een', 'zijn', 'ons', 'maar'];
+            
+            if (stopWords.indexOf(word) >= 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
         
     
         $(document).ready(function() {
@@ -56,7 +63,9 @@
                             freqClass = 'freqmore';
                     }
                     
-                    if (frequencies[word] > 1) text = text.replace(new RegExp(word, 'g'), '<span class="' + freqClass + '">' + word + '</span>');
+                    if (frequencies[word] > 1 && !isStopWord(word)) {
+                        text = text.replace(new RegExp(word, 'g'), '<span class="' + freqClass + '">' + word + '</span>');
+                    }
                     
                 }
                 
